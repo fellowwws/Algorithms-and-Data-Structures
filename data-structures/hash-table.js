@@ -24,24 +24,23 @@ class HashTable {
   }
 
   insert(key, value) {
-    //TODO edge cases
-    //  1. case sensitivity? 'sarah' === 'Sarah'
     if (typeof key !== "string") {
-      return new TypeError("invalid argument. key must be a string");
+      return new TypeError("Invalid argument. Key must be a string");
     }
 
-    const index = this._hash(key);
+    const index = this._hash(key.toLowerCase());
+
     if (!this._exists(index)) {
       this._store[index] = [];
     }
     if (!this._isUnique(key, index)) {
-      return new Error(`key ${key} already exists. each key must be unique`);
+      return new Error(`key ${key} already exists. Each key must be unique`);
     }
 
     this._store[index].push([key, value]);
   }
   retrieve(key) {
-    const index = this._hash(key);
+    const index = this._hash(key.toLowerCase());
 
     if (this._exists(index)) {
       const entries = this._store[index];
@@ -66,25 +65,23 @@ class HashTable {
       return removed;
     }
   }
-  resize() {
-    /*TODO*/
+  resize(size) {
+    if (typeof size !== "number") return;
+
+    const store = [...this._store]; // Make a copy
+    this._store = [];
+    this._size = size;
+
+    for (let i = 0; i < store.length; i++) {
+      const entries = store[i]; // [[key, val]] || undefined
+      if (!entries) continue;
+
+      for (let j = 0; j < entries.length; j++) {
+        const [k, val] = entries[j];
+        this.insert(k, val);
+      }
+    }
   }
 }
 
-[
-  ["paul", "0800-555-222"],
-  ["john", "0800-223-999"],
-  ["sarah", "0800-228-344"],
-  ["tom", "0800-234-567"],
-  ["jill", "0800-332-232"],
-  ["fran", "0800-355-822"],
-  ["lauren", "0800-233-899"],
-  ["james", "0800-223-545"]
-].forEach(([key, val]) => {
-  myHashTable.insert(key, val);
-});
-
-for (let i = 0; i < data.length; i++) {
-  const [key, val] = data[i];
-  myHashTable.insert(key, val);
-}
+module.exports = HashTable;
