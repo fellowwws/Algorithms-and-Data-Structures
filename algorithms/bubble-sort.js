@@ -3,7 +3,7 @@
  * @returns {number[]}
  */
 function bubbleSort(array) {
-  array = [...array];
+  if (array.length < 2) return array;
 
   do {
     sorting = false;
