@@ -1,45 +1,26 @@
-function swap(array, i, j) {
-  var temp = array[i];
-  array[i] = array[j];
-  array[j] = temp;
-}
-
-// basic implementation
-function bubbleSortBasic(array) {
-  var countOuter = 0;
-  var countInner = 0;
-  var countSwap = 0;
-
-  for (var i = 0; i < array.length; i++) {
-    countOuter++;
-    for (var j = 1; j < array.length; j++) {
-      countInner++;
-      if (array[j - 1] > array[j]) {
-        countSwap++;
-        swap(array, j - 1, j);
-      }
-    }
-  }
-}
-// optimized
+/**
+ * @param {number[]} array
+ * @returns {number[]}
+ */
 function bubbleSort(array) {
-  var countOuter = 0;
-  var countInner = 0;
-  var countSwap = 0;
+  array = [...array];
 
-  var swapped;
   do {
-    countOuter++;
-    swapped = false;
+    sorting = false;
     for (var i = 0; i < array.length; i++) {
-      countInner++;
-      if (array[i] && array[i + 1] && array[i] > array[i + 1]) {
-        countSwap++;
-        swap(array, i, i + 1);
-        swapped = true;
+      if (array[i + 1] && array[i] > array[i + 1]) {
+        swap(array, i);
+        sorting = true;
       }
     }
-  } while (swapped);
+  } while (sorting);
 
   return array;
 }
+
+function swap(array, i) {
+  const temp = array[i];
+  array[i] = array[i + 1];
+  array[i + 1] = temp;
+}
+var array = [4, 5, 1, 7, 3, 2, 9, 8, 6];
