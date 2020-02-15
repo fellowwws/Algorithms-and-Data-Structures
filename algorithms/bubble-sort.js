@@ -23,4 +23,3 @@ function swap(array, i) {
   array[i] = array[i + 1];
   array[i + 1] = temp;
 }
-var array = [4, 5, 1, 7, 3, 2, 9, 8, 6];
